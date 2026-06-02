@@ -991,24 +991,26 @@ def draw_card_back(c, cx, cy, drug, tab_pos=0, overflow_pearls=None, show_meal=F
         py_cur -= 2
 
 
-# ── Build PDF ────────────────────────────────────────────────────────────────
-output_path = "/mnt/user-data/outputs/drug_cards.pdf"
-c = canvas.Canvas(output_path, pagesize=landscape(letter))
-c.setTitle("Drug Reference Cards")
 
-# Instruction banner
-c.setFillColor(HexColor('#888ea0'))
-c.setFont("Helvetica", 7)
-c.drawCentredString(PAGE_W/2, PAGE_H - 0.30*inch,
-    "DRUG REFERENCE CARDS  \u2014  Print on cardstock  \u00b7  Cut on dashed lines  \u00b7  Laminate")
+if __name__ == '__main__':
+    # ── Build PDF ────────────────────────────────────────────────────────────────
+    output_path = "/mnt/user-data/outputs/drug_cards.pdf"
+    c = canvas.Canvas(output_path, pagesize=landscape(letter))
+    c.setTitle("Drug Reference Cards")
 
-# Draw 2 cards per page (prototype — both same drug, different tab positions)
-for idx, (px, py) in enumerate(POSITIONS):
-    draw_cut_guides(c, px, py, tab_pos=idx)
-    draw_card(c, px, py, drug, tab_pos=idx)
+    # Instruction banner
+    c.setFillColor(HexColor('#888ea0'))
+    c.setFont("Helvetica", 7)
+    c.drawCentredString(PAGE_W/2, PAGE_H - 0.30*inch,
+        "DRUG REFERENCE CARDS  \u2014  Print on cardstock  \u00b7  Cut on dashed lines  \u00b7  Laminate")
 
-c.save()
-print(f"Saved: {output_path}")
+    # Draw 2 cards per page (prototype — both same drug, different tab positions)
+    for idx, (px, py) in enumerate(POSITIONS):
+        draw_cut_guides(c, px, py, tab_pos=idx)
+        draw_card(c, px, py, drug, tab_pos=idx)
+
+    c.save()
+    print(f"Saved: {output_path}")
 
 # ── BATCH GENERATION ────────────────────────────────────────────────────────
 import openpyxl
